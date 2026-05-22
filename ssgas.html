@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>SS Gas Pipeline Invoice</title>
+                
+                <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                    
+                    <style>
+                        
+                        *{
+                            margin:0;
+                            padding:0;
+                            box-sizing:border-box;
+                            font-family:'Montserrat', sans-serif;
+                        }
+                        .logo-section{
+                            display:flex;
+                            align-items:center;
+                            gap:20px;
+                        }
+
+                        .logo-preview{
+                            width:120px;
+                            height:120px;
+                            border:2px dashed #bbb;
+                            border-radius:10px;
+                            overflow:hidden;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            background:#fafafa;
+                        }
+
+                        .logo-preview img{
+                            width:100%;
+                            height:100%;
+                            object-fit:contain;
+                        }
+                        body{
+                            background:#e5e5e5;
+                            padding:20px;
+                        }
+                        
+                        .invoice-page{
+                            width:1000px;
+                            margin:auto;
+                            background:#f4f4f4;
+                            padding:50px 60px;
+                            position:relative;
+                        }
+                        
+                        .top-watermark{
+                            position:absolute;
+                            top:15px;
+                            right:20px;
+                            font-size:14px;
+                            font-weight:600;
+                            color:#333;
+                        }
+                        
+                        .blue{
+                            color:#17a8e5;
+                        }
+                        
+                        .header{
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:flex-start;
+                            margin-bottom:70px;
+                        }
+                        
+                        .logo-section{
+                            display:flex;
+                            align-items:center;
+                            gap:25px;
+                        }
+                        
+                        .logo-circle{
+                            width:90px;
+                            height:90px;
+                            border:8px solid #17a8e5;
+                            border-radius:50%;
+                            position:relative;
+                        }
+                        
+                        .logo-circle::before,
+                        .logo-circle::after{
+                            content:"";
+                            position:absolute;
+                            background:#17a8e5;
+                            border-radius:50%;
+                        }
+                        
+                        .logo-circle::before{
+                            width:12px;
+                            height:12px;
+                            top:-18px;
+                            left:8px;
+                        }
+                        
+                        .logo-circle::after{
+                            width:12px;
+                            height:12px;
+                            bottom:-18px;
+                            right:8px;
+                        }
+                        
+                        .invoice-title{
+                            display:center;
+                            font-size:28px;
+                            font-weight:bold;
+                            color:.blue;
+                            font-weight:800;
+                            letter-spacing:6px;
+                            text-transform:uppercase;
+                        }
+                        
+                        .info-row{
+                            display:flex;
+<!--                            background: #17a8e5;-->
+<!--                            padding: 10px;-->
+                            font-size:15px;
+                            justify-content:space-between;
+                            margin-bottom:10px;
+                        }
+                        
+                        .info-box{
+                            width:30%;
+                            font-size:15px;
+                        }
+                        
+                        .label{
+                            font-size:15px;
+                            font-weight:700;
+                            color:#17a8e5;
+                            margin-bottom:10px;
+                            text-transform:uppercase;
+                        }
+                        .labe-right{
+                            text-align:center;
+                            font-size:15px;
+                            font-weight:700;
+                            color:#17a8e5;
+                            margin-bottom:10px;
+                            text-transform:uppercase;
+                        }
+                        
+                        .editable{
+                            border:none;
+                            background:transparent;
+                            width:100%;
+                            font-size:18px;
+                            color:#222;
+                            outline:none;
+                            resize:none;
+                            line-height:1.7;
+                        }
+                        .customer-section{
+                            display:flex;
+                            justify-content:space-between;
+                            margin-bottom:5px;
+                            font-size:15px;
+                        }
+                        .company-section{
+                            display:flex;
+                            justify-content:space-between;
+                            margin-bottom:10px;
+                            font-size:15px;
+                        }
+                        
+                        .bill-to{
+                            width:100%;
+                        }
+                        
+                        .company-details{
+                            width:100%;
+                            text-align:right;
+                        }
+                        
+                        .company-name{
+                            font-size:18px;
+                            font-weight:500;
+                            color:#17a8e5;
+                            margin-bottom:10px;
+                            color:#222;
+                        }
+                        
+                        .items-table{
+                            text-align:left;
+                            width:100%;
+                            border-collapse:collapse;
+                            margin-top:20px;
+                        }
+                        
+                        .items-table thead th{
+                            text-align:left;
+                            padding-bottom:5px;
+                            font-size:14px;
+                            color:#17a8e5;
+                            border-bottom:3px solid #17a8e5;
+                            text-transform:uppercase;
+                        }
+                        
+                        .items-table tbody tr{
+                            text-align:left;
+                            border-bottom:1px solid #999;
+                        }
+                        
+                        .items-table td{
+                            text-align:left;
+                            padding:10px 10px;
+                            vertical-align:top;
+                        }
+                        
+                        .description-title{
+                            font-size:18px;
+                            margin-bottom:8px;
+                        }
+                        
+                        .description-sub{
+                            font-size:14px;
+                            color:#888;
+                        }
+                        
+                        .small-input{
+                            width:90px;
+                            border:none;
+                            background:transparent;
+                            font-size:18px;
+                            outline:none;
+                            text-align:right;
+                        }
+                        
+                        .amount{
+                            font-size:18px;
+                            text-align:right;
+                        }
+                        
+                        .action-btn{
+                            background:#e53935;
+                            color:white;
+                            border:none;
+                            padding:8px 12px;
+                            border-radius:5px;
+                            cursor:pointer;
+                        }
+                        
+                        .add-btn{
+                            margin-top:25px;
+                            padding:12px 20px;
+                            border:none;
+                            background:#17a8e5;
+                            color:white;
+                            border-radius:6px;
+                            cursor:pointer;
+                            font-size:15px;
+                        }
+                        
+                        .total-section{
+                            display:flex;
+                            justify-content:space-between;
+                            margin-top:40px;
+                        }
+                        
+                        .grand-total-box{
+                            width:40%;
+                        }
+                        
+                        .grand-label{
+                            font-size:16px;
+                            margin-bottom:10px;
+                            
+                            
+                        }
+                        
+                        .grand-total{
+                            font-size:30px;
+                            font-weight:bold;
+                            color:#17a8e5;
+                            font-weight:700;
+                        }
+                        
+                        .summary-table{
+                            width:300px;
+                        }
+                        
+                        .summary-table td{
+                            padding:6px 0;
+                            font-size:16px;
+                        }
+                        
+                        .summary-table td:first-child{
+                            font-weight:700;
+                            text-align:right;
+                            padding-right:30px;
+                        }
+                        
+                        .summary-table td:last-child{
+                            text-align:right;
+                        }
+                        
+                        .bottom-section{
+                            display:flex;
+                            justify-content:space-between;
+                            margin-top:60px;
+                        }
+                        
+                        .bottom-box{
+                            width:45%;
+                        }
+                        
+                        .bottom-title{
+                            color:#17a8e5;
+                            font-weight:500;
+                            font-size:16px;
+                            margin-bottom:15px;
+                            text-transform:uppercase;
+                        }
+                        
+                        .bottom-box textarea{
+                            width:100%;
+                            border:none;
+                            background:transparent;
+                            font-size:16px;
+                            line-height:1.8;
+                            resize:none;
+                            outline:none;
+                        }
+                        
+                        .footer{
+                            text-align:right;
+                            margin-top:80px;
+                        }
+                        
+                        .footer-text{
+                            font-size:20px;
+                            letter-spacing:1px;
+                        }
+                        
+                        .footer-link{
+                            color:#17a8e5;
+                            margin-top:15px;
+                            display:block;
+                        }
+                        
+                        .
+                        .footer-logo img{
+                          width:70px;
+                          height:70px;
+                          object-fit:contain;
+                          border:1px solid #ccc;
+                          padding:5px;
+                          border-radius:10px;
+                        }
+                        .top-buttons{
+                            width:1000px;
+                            margin:auto;
+                            display:flex;
+                            gap:15px;
+                            margin-bottom:20px;
+                        }
+                        
+                        .top-buttons button{
+                            padding:12px 20px;
+                            border:none;
+                            border-radius:6px;
+                            cursor:pointer;
+                            color:white;
+                            font-size:15px;
+                        }
+                        
+                        .print-btn{
+                            background:#17a8e5;
+                        }
+                        
+                        .download-btn{
+                            background:#6f42c1;
+                        }
+                        
+                        @media print{
+                            
+                            .top-buttons,
+                            .action-column,
+                            .add-btn{
+                                display:none;
+                            }
+                            
+                            body{
+                                background:white;
+                                padding:0;
+                            }
+                            
+                            .invoice-page{
+                                width:100%;
+                            }
+                            
+                        }
+                        
+                    </style>
+    </head>
+    
+    <body>
+        
+        <div class="top-buttons">
+            
+            <button class="print-btn" onclick="window.print()">
+                Print Invoice
+            </button>
+            
+            <!--    <button class="download-btn" onclick="downloadHTML()">-->
+            <!--        Download HTML-->
+            <!--    </button>-->
+            
+        </div>
+        
+        <div class="invoice-page">
+            
+            <!--    <div class="top-watermark">-->
+            <!--        CREATED BY <span class="blue">TemplateLAB</span>-->
+            <!--    </div>-->
+            
+            <!-- Header -->
+            <div class="header">
+                
+                <div class="logo-section">
+                    
+                    <!--            <div class="logo-circle"></div>-->
+                    <div class="invoice-title">
+                        <span class="blue">SS GAS PIPELINE SYSTEM</span>
+                    </div>
+                    
+                </div>
+                <!--        <div class="info-box">-->
+                <!---->
+                <!--        #Build No/Flat No: D.No.2-->
+                <!--        Kottai Street, Rajapalayam Main Road,-->
+                <!--        Alangayam,-->
+                <!--        Tirupathur-->
+                <!--        Tamil Nadu, 635701,-->
+                <!--        Cell: 9943110131-->
+                <!--        </div>-->
+                
+            </div>
+            
+            <!-- Top Info -->
+            <div class="info-row">
+                
+                <div class="info-box">
+                    <div class="label">Invoice Number</div>
+                    <textarea class="editable">1000-15088</textarea>
+                </div>
+                
+                <div class="info-box">
+                    <div class="label">Date Of Issue</div>
+                    <textarea class="editable">12/06/2023</textarea>
+                </div>
+                <div class="info-box">
+                    <div class="label">GST Number</div>
+                    <textarea class="editable">33LCIPS5106E1ZK</textarea>
+                </div>
+                <!--        <div class="info-box" style="text-align:right;">-->
+                <!--            <div class="label">Cleaning Period Included</div>-->
+                <!--            <textarea class="editable">01/05/2023-31/05/2023</textarea>-->
+                <!--        </div>-->
+                
+            </div>
+            
+            <!-- Company -->
+            <div class="customer-section">
+                
+                <div class="bill-to">
+                    
+                    <div class="label">Bill To</div>
+                    <textarea class="editable company-name" rows="1">Client Name</textarea>
+
+                    <textarea class="editable" rows="2">Street address, City, State, Country ZIP Code</textarea>
+                    
+                </div>
+                
+                
+            </div>
+            <div class="company-section">
+                
+                <div class="bill-to">
+                    
+                    <div class="label">Bill From</div>
+                    
+                    <div class="company-details">
+                        
+                        <input class="editable company-name" value="SS GAS PIPELINE SYSTEM">
+                            
+                            <textarea class="editable" rows="2">#Build No/Flat No: D.No.2, Kottai Street, Rajapalayam Main Road, Alangayam, Tirupathur, Tamil Nadu, 635701</textarea>
+                            <textarea class="editable" rows="1">Phone No: 9943110131</textarea>
+                            <textarea class="editable" rows="2">Email: ssgaspipelinesystem@gmail.com</textarea>
+                            
+                    </div>
+                    
+                    
+                </div>
+            </div>
+            <!-- Table -->
+            <table class="items-table" id="invoiceTable">
+                
+                <thead>
+                    
+                    <tr>
+                        <th width="55%">Description</th>
+                        <th width="15%">Unit Cost</th>
+                        <th width="15%">Quantity</th>
+                        <th width="15%">Amount</th>
+                        <th class="action-column"></th>
+                    </tr>
+                    
+                </thead>
+<!--<tbody id="tableBody">-->
+<!--    -->
+<!--    <tr>-->
+<!--        -->
+<!--        <td>-->
+<!--            <label class="label">Description</label>-->
+<!--        </td>-->
+<!--        -->
+<!--        <td>-->
+<!--            <label class="label">Unit Cost</label>-->
+<!--        </td>-->
+<!--        -->
+<!--        <td>-->
+<!--            <label class="labe-right">Quantity</label>-->
+<!--        </td>-->
+<!--        -->
+<!--        <td>-->
+<!--            <label class="label">Amount</label>-->
+<!--        </td>-->
+<!--        -->
+<!--        -->
+<!--    </tr>-->
+<!--    -->
+<!--</tbody>-->
+                <tbody id="tableBody">
+                    
+                    <tr>
+                        
+                        <td>
+                            <textarea class="editable description-title">Item: </textarea>
+                            <textarea class="editable description-sub">Description :</textarea>
+                        </td>
+                        
+                        <td>
+                            <input type="number" class="small-input price" value="0" onchange="calculateTotals()">
+                        </td>
+                        
+                        <td>
+                            <input type="number" class="small-input qty" value="1" onchange="calculateTotals()">
+                        </td>
+                        
+                        <td class="amount">₹0.00</td>
+                        
+                        <td class="action-column">
+                            <button class="action-btn" onclick="removeRow(this)">X</button>
+                        </td>
+                        
+                    </tr>
+                    
+                </tbody>
+                
+            </table>
+            
+            <button class="add-btn" onclick="addRow()">
+                + Add Service
+            </button>
+            
+            <!-- Totals -->
+            <div class="total-section">
+                
+                <div class="grand-total-box">
+                    
+                    <div class="grand-label">GRAND TOTAL</div>
+                    
+                    <div class="grand-total" id="grandTotal">
+                        ₹0.00
+                    </div>
+                    
+                </div>
+                
+                <table class="summary-table">
+                    
+                    <tr>
+                        <td>SUBTOTAL</td>
+                        <td id="subtotal">₹0.00</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>DISCOUNT</td>
+                        <td>
+                            <input type="number" id="discount" value="0" class="small-input" onchange="calculateTotals()">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>GST (%)</td>
+                        <td>
+                            <input type="number" id="taxRate" value="18" class="small-input" onchange="calculateTotals()">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>TAX</td>
+                        <td id="taxAmount">₹0.00</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>TOTAL</td>
+                        <td id="finalTotal">₹0.00</td>
+                    </tr>
+                    
+                </table>
+                
+            </div>
+            
+            <!-- Bottom -->
+            <div class="bottom-section">
+                
+                <div class="bottom-box">
+                    
+                    <div class="bottom-title">Terms & Conditions</div>
+                    
+                    <textarea rows="2">The rules that dictate exactly how, when, and by what methods a seller expects to be paid.</textarea>
+                    
+                </div>
+                
+                        <div class="bottom-box">
+                
+                            <div class="bottom-title">Payment Instructions</div>
+                
+                            <textarea rows="6">Cash,UPI,Bank Transfer</textarea>
+                
+                        </div>
+                
+            </div>
+            
+            
+            <!-- Footer -->
+            <div class="footer">
+<!--                <img src="your-image-url.jpg" alt="Description of the image" width="500" height="300">-->
+
+<!--                <div class="logo-section">-->
+<!---->
+<!--                    <div class="logo-preview">-->
+<!--                        <img id="logoImage" src="" alt="Logo">-->
+<!--                    </div>-->
+<!---->
+<!--                    <div>-->
+<!--                        <input type="file" id="logoInput" accept="image/*">-->
+<!--                    </div>-->
+<!---->
+<!--                </div>-->
+                
+                <div class="footer-text">
+                    THANK YOU FOR YOUR BUSINESS!
+                </div>
+                
+<!--                <a href="#" class="footer-link">-->
+<!--                    © TemplateLab.com-->
+<!--                </a>-->
+                
+            </div>
+            
+        </div>
+        
+        <script>
+            
+            function addRow(){
+                
+                let row = `
+    <tr>
+    
+        <td>
+            <textarea class="editable description-title">New Service</textarea>
+            <textarea class="editable description-sub">Service description</textarea>
+        </td>
+    
+        <td>
+            <input type="number" class="small-input price" value="0" onchange="calculateTotals()">
+        </td>
+    
+        <td>
+            <input type="number" class="small-input qty" value="1" onchange="calculateTotals()">
+        </td>
+    
+        <td class="amount">₹0.00</td>
+    
+        <td class="action-column">
+            <button class="action-btn" onclick="removeRow(this)">X</button>
+        </td>
+    
+    </tr>
+    `;
+    
+    document.getElementById("tableBody").insertAdjacentHTML("beforeend", row);
+    
+    calculateTotals();
+            }
+            
+            function removeRow(btn){
+                
+                btn.closest("tr").remove();
+                
+                calculateTotals();
+            }
+            
+            function calculateTotals(){
+                
+                let prices = document.querySelectorAll(".price");
+                let qtys = document.querySelectorAll(".qty");
+                let amounts = document.querySelectorAll(".amount");
+                
+                let subtotal = 0;
+                
+                for(let i=0;i<prices.length;i++){
+                    
+                    let price = parseFloat(prices[i].value) || 0;
+                    let qty = parseFloat(qtys[i].value) || 0;
+                    
+                    let total = price * qty;
+                    
+                    subtotal += total;
+                    
+                    amounts[i].innerHTML = "₹" + total.toFixed(2);
+                }
+                
+                let discount = parseFloat(document.getElementById("discount").value) || 0;
+                
+                let taxRate = parseFloat(document.getElementById("taxRate").value) || 0;
+                
+                let taxable = subtotal - discount;
+                
+                let tax = taxable * taxRate / 100;
+                
+                let final = taxable + tax;
+                
+                document.getElementById("subtotal").innerHTML = "₹" + subtotal.toFixed(2);
+                
+                document.getElementById("taxAmount").innerHTML = "₹" + tax.toFixed(2);
+                
+                document.getElementById("finalTotal").innerHTML = "₹" + final.toFixed(2);
+                
+                document.getElementById("grandTotal").innerHTML = "₹" + final.toFixed(2);
+            }
+            
+            function downloadHTML(){
+                
+                const html = document.documentElement.outerHTML;
+                
+                const blob = new Blob([html], {type:'text/html'});
+                
+                const link = document.createElement('a');
+                
+                link.href = URL.createObjectURL(blob);
+                
+                link.download = 'invoice-template.html';
+                
+                link.click();
+            }
+            
+            calculateTotals();
+            
+        </script>
+        
+    </body>
+</html>
